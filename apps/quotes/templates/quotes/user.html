@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+
+
+  <body>
+    <a href="{% url 'quotes:index' %}"> Home </a>
+    <a href="{% url 'quotes:logout' %}"> Logout </a>
+
+
+    <h3>{{user.alias}}</h3>
+    <p>{{count}}</p>
+
+    {% for quote in quotes %}
+    <p>{{quote.author}}</p>
+    <p>{{quote.content}}</p>
+    {% endfor %}
+
+  </body>
+</html>

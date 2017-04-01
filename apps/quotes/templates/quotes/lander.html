@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <a href="{% url 'quotes:logout' %}"> Logout </a>
+
+    <h1> quotes </h1>
+    {% for quote in quotes %}
+    <p>{{quote.content}}</p>
+    <p>{{quote.author}}</p>
+    <a href="{% url 'quotes:user' id=quote.User.id %}">{{quote.User.alias}}</a>
+    <a href="{% url 'quotes:add_fav' id=quote.id %}">Add to favorites </a>
+    {% endfor %}
+
+    <h2> my favorites </h2>
+    {% for favorite in favorites %}
+    <p>{{favorite.content}}</p>
+    <p>{{favorite.author}}</p>
+    <a href="{% url 'quotes:user' id=favorite.User.id %}">{{favorite.User.alias}}</a>
+    <a href="{% url 'quotes:remove' id=favorite.id %}">Remove from my Favorites</a>
+    {% endfor %}
+
+    <h3> contribute a quote </h3>
+
+    {% if messages %}
+      <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.ERROR %} class="{{ message.ERROR }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+
+
+    <form action="{% url 'quotes:contribute' %}" method="POST">
+      {% csrf_token %}
+      Quote <input type="text" name="content"></input>
+      Author <input type="text" name="author"></input>
+      <input type="submit" value="contribute"</input>
+    </form>
+
+  </body>
+</html>
